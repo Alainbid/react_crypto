@@ -76,7 +76,7 @@ const GlobalChart = ({ lescoinsData }) => {
   // creation des carrés par cryptos
   return (
     <div className="global-chart">
-      {/* <Treemap
+      <Treemap
         width={730}
         height={181}
         data={dataArray}
@@ -86,7 +86,7 @@ const GlobalChart = ({ lescoinsData }) => {
         aspectRatio={1}
       >
         <Tooltip content={<TreemapToolTip />} />
-      </Treemap> */}
+      </Treemap>
     </div>
   );
 };

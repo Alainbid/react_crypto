@@ -1,6 +1,6 @@
 header {
   margin: 20px 0 25px 0;
-  display: grid;
+  // display: grid;
   grid-template-columns: 1fr 730px;
 
   @media screen and (max-width: 1150px) {
@@ -8,13 +8,15 @@ header {
   }
 
   .header-container {
+    align-items: center;
     display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows:  1fr 600px;
+    grid-template-columns: 30% 30%;
+    // grid-template-rows:  1fr 100px;
     grid-template-areas:
-      "a b"
+      "a b "
       "c c";
-    padding-right: 10px;
+    padding-right: 50px;
+    justify-content: space-evenly;
 
     .title,
     .infos-mkt {
