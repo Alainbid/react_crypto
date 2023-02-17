@@ -10,7 +10,7 @@ header {
   .header-container {
     display: grid;
     grid-template-columns: 50% 50%;
-    grid-template-rows: 132px 1fr;
+    grid-template-rows:  1fr 600px;
     grid-template-areas:
       "a b"
       "c c";
@@ -82,7 +82,7 @@ header {
 
       p {
         margin-left: 5px;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
       }
     }
     .infos-mkt {

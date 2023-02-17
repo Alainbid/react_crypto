@@ -30,7 +30,7 @@ const App = () => {
     <div className="app-container">
       <header>
         <HeaderInfos />
-        <GlobalChart lescoinsData={coinsData} />
+        {/* <GlobalChart lescoinsData={coinsData} /> */}
         <Table lescoinsdata={coinsData} />
         <ToTop />
         {/* on passe les coins data en props  à globalChart*/}

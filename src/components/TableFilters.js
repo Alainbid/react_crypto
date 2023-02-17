@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setStableState } from "../actions/stable.action";
-const onlyFavoris = (image) => {};
+import { setListDisplay } from "../actions/list.actions";
 
 const TableFilters = () => {
   const [showStable, setShowStable] = useState(true);
+  const [showFavList, setShowFavList] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setStableState(showStable));
-  }, [showStable, dispatch]);
+    dispatch(setListDisplay(showFavList));
+  }, [showStable, showFavList, dispatch]);
 
   return (
     <div className="table-filters">
@@ -28,12 +30,20 @@ const TableFilters = () => {
         <div className="no-list-btn">
           <p>Auncune liste</p>
         </div>
-        <div className="fav-list">
-          <p>Liste des favoris</p>
+        <div
+          className="fav-list"
+          onClick={() => {
+            setShowFavList(!showFavList);
+          }}
+        >
+          <p> {showFavList ? "Mes favoris" : "Tous les tokens"}</p>
           <img
-            src="../assets/star-full.svg"
+            src={
+              showFavList
+                ? "../assets/star-full.svg"
+                : "../assets/star-empty.svg"
+            }
             alt="icon star"
-            onClick={onlyFavoris("../assets/star-full.svg")}
           />
         </div>
       </div>

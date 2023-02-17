@@ -4,10 +4,10 @@ import TableLine from "./TableLine";
 import ToTop from "./ToTop";
 
 const Table = ({ lescoinsdata }) => {
-  const [rangeNumber, setRangeNumber] = useState(10);
+  const [rangeNumber, setRangeNumber] = useState(50);
   const [orderBy, setOrderBy] = useState("");
   const showStable = useSelector((state) => state.stableReducer);
-
+  const showFavoris = useSelector((state) => state.listReducer);
   // console.log(lescoinsdata);
   const tableHeader = [
     "prix",
@@ -47,6 +47,22 @@ const Table = ({ lescoinsdata }) => {
       return false;
     } else {
       return true;
+    }
+  };
+
+  const onlyFavoris = (coin) => {
+    let v = false;
+
+    // console.log(coin.symbol);
+    let x = JSON.stringify(coin.symbol);
+    x = `{"coinId":"` + coin.symbol + `"}`;
+    // console.log(" x ", x);
+    v = localStorage.getItem(x);
+    // console.log("v   ", v);
+    if (v != null && v === "true") {
+      return true;
+    } else {
+      return false;
     }
   };
 
@@ -99,6 +115,17 @@ const Table = ({ lescoinsdata }) => {
         {lescoinsdata &&
           lescoinsdata
             .slice(0, rangeNumber)
+            //********************************** */
+            .filter((coin) => {
+              if (showFavoris) {
+                if (onlyFavoris(coin)) {
+                  return coin;
+                }
+              } else {
+                return coin;
+              }
+            })
+            //******************************* */
             .filter((coin) => {
               if (showStable) {
                 return coin;
@@ -108,6 +135,7 @@ const Table = ({ lescoinsdata }) => {
                 }
               }
             })
+            //********************************* */
             .sort((a, b) => {
               switch (orderBy) {
                 case "prix":

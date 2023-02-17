@@ -25,7 +25,8 @@ const TableLine = ({ coin, index }) => {
   return (
     <div className="table-line">
       <div className="infos-container">
-        <StarIcon coinId={coin.id} />
+        <StarIcon coinId={coin.symbol} />
+        {/* //**************************** on retourne le symbol */}
         <p>{index + 1}</p>
         <div className="img">
           <img src={coin.image} height="20" alt="logo" />
