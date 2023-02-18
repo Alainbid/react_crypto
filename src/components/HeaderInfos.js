@@ -5,18 +5,39 @@ import TableFilters from "./TableFilters";
 
 const HeaderInfos = () => {
   const [headerData, setheaderData] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [errorFetchedChecker, setErrorFetchedChecker] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`https://api.coingecko.com/api/v3/global`)
-      .then((res) => setheaderData(res.data.data));
-  }, []);
+    async function fetchData() {
+      setIsLoaded(false);
+      axios
+        .get(`https://api.coingecko.com/api/v3/global`)
+        .then((res) => {
+          if (res) {
+            setheaderData(res.data.data);
+            setIsLoaded(true);
+          }
+        })
+        .catch((e) => {
+          console.log("erreur ", e);
+          setErrorFetchedChecker((errorFetchedChecker) => !errorFetchedChecker);
+        });
+    }
+    if (!isLoaded) {
+      setTimeout(() => {
+        fetchData();
+      }, 1000);
+    } else {
+      fetchData();
+    }
+  }, [errorFetchedChecker]);
 
   let nCryptos = "";
-  console.log("headerdata  ", headerData);
+  // console.log("headerdata  ", headerData);
   let list = headerData.market_cap_percentage;
-  console.log("mkt cap = ", list);
-  console.log("headerdata btc :", list.btc);
+  // console.log("mkt cap = ", list);
+  // console.log("headerdata btc :", list.btc);
 
   if (headerData.active_cryptocurrencies) {
     nCryptos = headerData.active_cryptocurrencies.toLocaleString("de-DE");
@@ -30,9 +51,14 @@ const HeaderInfos = () => {
             <img src="./assets/logo.png" alt="logo" /> Watch Tower{" "}
           </h1>
         </li>
-
-        <li>Crypto monaies {nCryptos}</li>
-        <li> Nombre de marchés {headerData.markets && headerData.markets}</li>
+        <ul className="avec-espace">
+          <li>Nombre de Crypto-monaies </li>
+          <li>{nCryptos}</li>
+        </ul>
+        <ul className="avec-espace">
+          <li> Nombre de marchés</li>
+          <li> {headerData.markets && headerData.markets}</li>
+        </ul>
       </div>
       <div className="infos-mkt">
         <li>

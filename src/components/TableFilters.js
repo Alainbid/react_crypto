@@ -28,7 +28,7 @@ const TableFilters = () => {
           </label>
         </div>
         <div className="no-list-btn">
-          <p>Auncune liste</p>
+          <p>_______________</p>
         </div>
         <div
           className="fav-list"
