@@ -5,39 +5,33 @@ import TableFilters from "./TableFilters";
 
 const HeaderInfos = () => {
   const [headerData, setheaderData] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [headerBtc, setheaderBtc] = useState([]);
+  const [headerEth, setheaderEth] = useState([]);
   const [errorFetchedChecker, setErrorFetchedChecker] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
-      setIsLoaded(false);
-      axios
-        .get(`https://api.coingecko.com/api/v3/global`)
-        .then((res) => {
-          if (res) {
-            setheaderData(res.data.data);
-            setIsLoaded(true);
-          }
-        })
-        .catch((e) => {
-          console.log("erreur ", e);
-          setErrorFetchedChecker((errorFetchedChecker) => !errorFetchedChecker);
-        });
-    }
-    if (!isLoaded) {
-      setTimeout(() => {
-        fetchData();
-      }, 1000);
-    } else {
-      fetchData();
-    }
-  }, [errorFetchedChecker]);
+    axios
+      .get(`https://api.coingecko.com/api/v3/global`)
+      .then((res) => {
+        if (res) {
+          setheaderData(res.data.data);
+          setheaderBtc(res.data.data.market_cap_percentage.btc);
+          setheaderEth(res.data.data.market_cap_percentage.eth);
+        }
+      })
+      .catch((e) => {
+        console.log("erreur ", e);
+        setErrorFetchedChecker((errorFetchedChecker) => !errorFetchedChecker);
+      });
+  }, [null]);
 
   let nCryptos = "";
-  // console.log("headerdata  ", headerData);
-  let list = headerData.market_cap_percentage;
-  // console.log("mkt cap = ", list);
-  // console.log("headerdata btc :", list.btc);
+
+  let btc = parseFloat(headerBtc).toFixed(1);
+  let eth = parseFloat(headerEth).toFixed(1);
+
+  console.log("headerdata  ", headerData);
+  console.log("headerdata btc  :", btc);
 
   if (headerData.active_cryptocurrencies) {
     nCryptos = headerData.active_cryptocurrencies.toLocaleString("de-DE");
@@ -67,8 +61,8 @@ const HeaderInfos = () => {
             percent={headerData.market_cap_change_percentage_24h_usd}
           />
         </li>
-        <li>Part de marché Bitcoin : {list.btc.toFixed(1) + "%"}</li>
-        <li>Part de marché Ethereum : {list.eth.toFixed(1) + "%"}</li>
+        <li>Part de marché Bitcoin : {btc + "%"}</li>
+        <li>Part de marché Ethereum : {eth + "%"}</li>
       </div>
       <TableFilters />
     </div>

@@ -21,7 +21,7 @@ const TableLine = ({ coin, index }) => {
     // x = x.toFixed(1);
     return x.toLocaleString("de-DE");
   };
-
+  // console.log(coin);
   return (
     <div className="table-line">
       <div className="infos-container">
